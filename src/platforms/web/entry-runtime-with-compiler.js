@@ -37,9 +37,10 @@ Vue.prototype.$mount = function (
   const options = this.$options
   // resolve template/el and convert to render function
   // render > template > el
-  if (!options.render) {
+  if (!options.render) { //如果不存在
     let template = options.template
-    if (template) {
+  
+    if (template) { //如果存在
       if (typeof template === 'string') {
         if (template.charAt(0) === '#') {
           template = idToTemplate(template)
@@ -59,7 +60,8 @@ Vue.prototype.$mount = function (
         }
         return this
       }
-    } else if (el) {
+    } else if (el) { 
+      //如果不存在outerHTML:除了包含innerHTML的全部内容外, 还包含对象标签本身。
       template = getOuterHTML(el)
     }
 
@@ -95,6 +97,11 @@ Vue.prototype.$mount = function (
 /**
  * Get outerHTML of elements, taking care
  * of SVG elements in IE as well.
+ * 一、区别：
+1）innerHTML:
+　　从对象的起始位置到终止位置的全部内容,不包括Html标签。
+2）outerHTML:
+　　除了包含innerHTML的全部内容外, 还包含对象标签本身。
  */
 function getOuterHTML (el: Element): string {
   if (el.outerHTML) {
