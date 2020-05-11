@@ -12,7 +12,8 @@ import { updateListeners } from '../vdom/helpers/index'
 export function initEvents (vm: Component) {
   vm._events = Object.create(null)
   vm._hasHookEvent = false
-  // init parent attached events
+  // init parent attached events 为什么在当前的地方，处理老爹的监听器？
+  // 事件派发者一定是事件监听者 从老爹里面拿出来，自己派发自己监听
   const listeners = vm.$options._parentListeners
   if (listeners) {
     updateComponentListeners(vm, listeners)

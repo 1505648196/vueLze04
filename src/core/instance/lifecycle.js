@@ -193,7 +193,9 @@ export function mountComponent (
       vm._update(vm._render(), hydrating)
     }
   }
-
+  //
+  //渲染Watcher  通过diff算法比对dom的变化， 组件只有一个渲染Watcher，
+  //用户（user）Watcher 有很多个，比如使用了watch computed 区分一下  
   // we set this to vm._watcher inside the watcher's constructor
   // since the watcher's initial patch may call $forceUpdate (e.g. inside child
   // component's mounted hook), which relies on vm._watcher being already defined

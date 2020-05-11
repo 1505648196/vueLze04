@@ -50,7 +50,7 @@ export function initMixin (Vue: Class<Component>) {
       vm._renderProxy = vm
     }
     // expose real self
-    // 初始化核心代码
+    // 初始化核心代码111111************90
     vm._self = vm
     initLifecycle(vm) // $parent/$children等等
     initEvents(vm) // 事件监听
