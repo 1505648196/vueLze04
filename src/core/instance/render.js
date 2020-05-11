@@ -71,7 +71,8 @@ export function renderMixin (Vue: Class<Component>) {
 
   Vue.prototype._render = function (): VNode {
     const vm: Component = this
-    const { render, _parentVnode } = vm.$options
+    //这个render函数是从$options  里拿的，$options  里的render是从entry-runtime-with-compiler.js 编译里获取的
+    const { render, _parentVnode } = vm.$options  
 
     if (_parentVnode) {
       vm.$scopedSlots = normalizeScopedSlots(
@@ -91,7 +92,7 @@ export function renderMixin (Vue: Class<Component>) {
       // separately from one another. Nested component's render fns are called
       // when parent component is patched.
       currentRenderingInstance = vm
-      vnode = render.call(vm._renderProxy, vm.$createElement)
+      vnode = render.call(vm._renderProxy, vm.$createElement)  //计算虚拟dom
     } catch (e) {
       handleError(e, vm, `render`)
       // return error render result,
@@ -105,7 +106,7 @@ export function renderMixin (Vue: Class<Component>) {
           vnode = vm._vnode
         }
       } else {
-        vnode = vm._vnode
+        vnode = vm._vnode //计算出虚拟的dom的结果
       }
     } finally {
       currentRenderingInstance = null
