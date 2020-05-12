@@ -110,7 +110,8 @@ function initProps (vm: Component, propsOptions: Object) {
 }
 
 function initData (vm: Component) {
-  // 获取data选项
+  // 获取data选项  什么时候可以是对象：根实例，什么时候可以函数：组件，
+  // 这样做避免数据污染
   let data = vm.$options.data
   data = vm._data = typeof data === 'function'
     ? getData(data, vm)
@@ -347,18 +348,18 @@ export function stateMixin (Vue: Class<Component>) {
   Vue.prototype.$delete = del
 
   Vue.prototype.$watch = function (
-    expOrFn: string | Function,
-    cb: any,
-    options?: Object
+    expOrFn: string | Function, //字符串或方法
+    cb: any, //回调函数
+    options?: Object //配置
   ): Function {
     const vm: Component = this
     if (isPlainObject(cb)) {
       return createWatcher(vm, expOrFn, cb, options)
     }
     options = options || {}
-    options.user = true
+    options.user = true //很关键。判断用户选项的watcher，如果不是就创建组件的watcher
     const watcher = new Watcher(vm, expOrFn, cb, options)
-    if (options.immediate) {
+    if (options.immediate) { //如果有立即执行，就直接调用，如果没有就等下次改变再调用
       try {
         cb.call(vm, watcher.value)
       } catch (error) {

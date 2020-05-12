@@ -31,7 +31,7 @@ methodsToPatch.forEach(function (method) {
   def(arrayMethods, method, function mutator (...args) {
     // 执行默认行为
     const result = original.apply(this, args)
-
+ 
     // 额外扩展行为：通知更新
     // 获取小秘书
     const ob = this.__ob__
