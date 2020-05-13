@@ -162,6 +162,7 @@ export default class Watcher {
   /**
    * Subscriber interface.
    * Will be called when a dependency changes.
+   * 执行update方法
    */
   update () {
     /* istanbul ignore else */
@@ -170,7 +171,7 @@ export default class Watcher {
     } else if (this.sync) {
       this.run()
     } else {
-      queueWatcher(this)
+      queueWatcher(this) //走这里Watcher入队，把自己传给了queueWatcher
     }
   }
 

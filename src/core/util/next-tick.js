@@ -19,6 +19,7 @@ function flushCallbacks () {
   }
 }
 
+
 // Here we have async deferring wrappers using microtasks.
 // In 2.5 we used (macro) tasks (in combination with microtasks).
 // However, it has subtle problems when state is changed right before repaint
@@ -30,7 +31,12 @@ function flushCallbacks () {
 // where microtasks have too high a priority and fire in between supposedly
 // sequential events (e.g. #4521, #6690, which have workarounds)
 // or even between bubbling of the same event (#6566).
+
 let timerFunc
+/*
+ Vue 在内部对异步队列尝试使⽤原⽣的 Promise.then 、 MutationObserver
+ 或 setImmediate ，如果执⾏环境都不⽀持，则会采⽤ setTimeout 代替。
+*/
 
 // The nextTick behavior leverages the microtask queue, which can be accessed
 // via either native Promise.then or MutationObserver.
@@ -39,6 +45,7 @@ let timerFunc
 // completely stops working after triggering a few times... so, if native
 // Promise is available, we will use it:
 /* istanbul ignore next, $flow-disable-line */
+//首选promise
 if (typeof Promise !== 'undefined' && isNative(Promise)) {
   const p = Promise.resolve()
   timerFunc = () => {
@@ -86,6 +93,8 @@ if (typeof Promise !== 'undefined' && isNative(Promise)) {
 
 export function nextTick (cb?: Function, ctx?: Object) {
   let _resolve
+  //callbacks 是一个数组
+  //放入回调函数组中一个包装函数，可以处理cb中可能的错误
   callbacks.push(() => {
     if (cb) {
       try {
