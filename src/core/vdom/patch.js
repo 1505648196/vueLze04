@@ -1,4 +1,5 @@
 /**
+ * 虚拟dom的补丁算法
  * Virtual DOM patching algorithm based on Snabbdom by
  * Simon Friis Vindum (@paldepind)
  * Licensed under the MIT License

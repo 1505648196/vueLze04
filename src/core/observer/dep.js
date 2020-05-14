@@ -46,7 +46,7 @@ export default class Dep {
     }
     //通知更新后， 所有watcher批量执行它们的update()
     for (let i = 0, l = subs.length; i < l; i++) {
-      subs[i].update()
+      subs[i].update() //执行更新
     }
   }
 }

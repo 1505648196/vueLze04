@@ -211,7 +211,7 @@ export function defineReactive(
         val = newVal
       }
       childOb = !shallow && observe(newVal) //进行社会主义教育
-      dep.notify()
+      dep.notify() //通知更新
     }
   })
 }
